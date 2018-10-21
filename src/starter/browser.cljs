@@ -7,9 +7,13 @@
 
 (def popover (reagent/adapt-react-class bp-core/Popover))
 
+(def table-data (into [] (map vec (partition 4 (range 40)))))
+
 (def table (reagent/adapt-react-class bp-table/Table))
 
 (def column (reagent/adapt-react-class bp-table/Column))
+
+(def cell (reagent/adapt-react-class bp-table/Cell))
 
 (defn app []
   [:div
@@ -17,12 +21,12 @@
     {:content (reagent/as-element [:div "I am a blueprint popover"])
      :target (reagent/as-element [button "foo"])}]
    [:div
-    [table {:numRows 10}
-     [column]
-     [column]
-     [column]
-     [column]
-     ]]])
+    (let [cr #(reagent/as-element [cell (get-in table-data [%1 %2])])]
+      [table {:numRows 10}
+       [column {:name "foo" :cellRenderer cr}]
+       [column {:name "bar" :cellRenderer cr}]
+       [column {:name "baz" :cellRenderer cr}]
+       [column {:name "quz" :cellRenderer cr}]])]])
 
 ;; start is called by init and after code reloading finishes
 (defn ^:dev/after-load start []
