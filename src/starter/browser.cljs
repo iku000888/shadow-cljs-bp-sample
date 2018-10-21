@@ -1,18 +1,28 @@
 (ns starter.browser
   (:require [reagent.core :as reagent]
-            ["@blueprintjs/core" :as bp-core]))
+            ["@blueprintjs/core" :as bp-core]
+            ["@blueprintjs/table" :as bp-table]))
 
-(def button
-  (reagent/adapt-react-class bp-core/Button))
+(def button (reagent/adapt-react-class bp-core/Button))
 
-(def popover
-  (reagent/adapt-react-class bp-core/Popover))
+(def popover (reagent/adapt-react-class bp-core/Popover))
+
+(def table (reagent/adapt-react-class bp-table/Table))
+
+(def column (reagent/adapt-react-class bp-table/Column))
 
 (defn app []
-  [:div "hello world"
+  [:div
    [popover
     {:content (reagent/as-element [:div "I am a blueprint popover"])
-     :target (reagent/as-element [button "foo"])}]])
+     :target (reagent/as-element [button "foo"])}]
+   [:div
+    [table {:numRows 10}
+     [column]
+     [column]
+     [column]
+     [column]
+     ]]])
 
 ;; start is called by init and after code reloading finishes
 (defn ^:dev/after-load start []
